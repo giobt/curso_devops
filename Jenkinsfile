@@ -4,9 +4,10 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                dockerImage = docker.build 'gabalconi/curso_devos:from_jenkins'
+                script {
+                    dockerImage = docker.build 'gabalconi/curso_devos:from_jenkins'
+                }
             }
         }
-        
     }
 }
