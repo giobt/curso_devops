@@ -1,12 +1,12 @@
 pipeline {
-    agent {
-        docker { image 'gradle:7.2-jdk11' }
-    }
+    agent any
+
     stages {
         stage('Build') {
             steps {
-                sh 'gradle --version'
+                dockerImage = docker.build 'gabalconi/curso_devos:from_jenkins'
             }
         }
+        
     }
 }
