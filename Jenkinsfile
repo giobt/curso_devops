@@ -4,17 +4,17 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building project...'
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'Running tests...'
+                dockerImage = docker.build "gabalconi/curso_devops"
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying to production...'
+                script {
+                    docker.withRegistry('', 'credentials-id') {
+                        dockerImage.push("v_$BUILD_NUMER")
+                        dockerImage.push("latest")
+                    }
+                }
             }
         }
     }
