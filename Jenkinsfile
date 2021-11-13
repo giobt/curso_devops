@@ -3,9 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                groovy {
-                    script 'println "Hello World"'
-                }
+                echo 'Hello World'
             }
         }
     }
