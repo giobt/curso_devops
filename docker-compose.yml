@@ -4,6 +4,7 @@ version: '3.1'
 services:
 
   app:
+    container_name: app
     build:
       context: .
       dockerfile: Dockerfile
@@ -11,8 +12,21 @@ services:
       - "80:8080"
     
   db:
+    container_name: db
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: example
+
+  jenkins:
+    container_name: jenkins
+    user: root
+    privileged: true
+    image: jenkins/jenkins:lts
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./jenkins:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
