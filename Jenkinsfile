@@ -23,18 +23,13 @@ pipeline {
             steps {
                 script {
                     withAWS(region: 'eu-west-2', credentials: 'd91f7e36-e9b6-48eb-af4d-a16e219e0a03') {
-                        def taskdef = 'aws ecs describe-task-definition --task-definition ws ecs describe-task-definition --task-definition first-run-task-definition:1'
-
                         taskDefRegistry = readJSON text: sh(returnStdout: true, script:"aws ecs register-task-definition \
-                            --task-role-arn <task-role-arn> \
-                            --family <task-def-name> \
-                            --network-mode awsvpc \
-                            --requires-compatibilities EC2 FARGATE \
+                            --family first-run-task-definition \
                             --cli-input-json file://taskdef.json"), returnPojo: true
 
-                        def updateService = "aws ecs update-service --service <your-ecs-service-name> --cluster <your-cluster-name> --force-new-deployment"
+                        def updateService = "aws ecs update-service --service helloworld --cluster helloworld --force-new-deployment"
                         def runUpdateService = sh(returnStdout: true, script: updateService)
-                        def serviceStable = "aws ecs wait services-stable --service $internationalService --cluster $internationalCluster"
+                        def serviceStable = "aws ecs wait services-stable --service helloworld --cluster helloworld"
                         sh(returnStdout: true, script: serviceStable)
                     }
                 }
