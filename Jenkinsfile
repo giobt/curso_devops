@@ -19,18 +19,15 @@ pipeline {
                 }
             }
         }
-        stage('Deplou') {
+        stage('Deploy') {
             steps {
                 script {
                     withAWS(region: 'eu-west-2', credentials: 'd91f7e36-e9b6-48eb-af4d-a16e219e0a03') {
-                        taskDefRegistry = readJSON text: sh(returnStdout: true, script:"aws ecs register-task-definition \
+                        sh "aws ecs register-task-definition \
                             --family first-run-task-definition \
-                            --cli-input-json file://taskdef.json"), returnPojo: true
+                            --cli-input-json file://taskdef.json"
 
-                        def updateService = "aws ecs update-service --service helloworld --cluster helloworld --force-new-deployment"
-                        def runUpdateService = sh(returnStdout: true, script: updateService)
-                        def serviceStable = "aws ecs wait services-stable --service helloworld --cluster helloworld"
-                        sh(returnStdout: true, script: serviceStable)
+                        sh "aws ecs update-service --service helloworld --cluster helloworld --force-new-deployment"
                     }
                 }
             }
