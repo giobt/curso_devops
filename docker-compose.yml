@@ -8,16 +8,29 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      SQL_DB_HOST: db
+      SQL_DB_NAME: postgres
+      SQL_DB_USER: postgres
+      SQL_DB_PASSWORD: example4132
     ports:
-      - "80:8080"
+      - "8080:8080"
     
   db:
     container_name: db
-    image: mysql
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
+    image: postgres:14.2
+    restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: example
+      POSTGRES_PASSWORD: example4132
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8081:8080"
 
   jenkins:
     container_name: jenkins
@@ -25,7 +38,7 @@ services:
     privileged: true
     image: jenkins/jenkins:lts
     ports:
-      - "8080:8080"
+      - "8082:8080"
     volumes:
       - ./jenkins:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
