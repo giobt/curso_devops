@@ -4,3 +4,5 @@ Dockerfile
 docker-compose.yml
 README
 .gitignore
+jenkins
+jenkinsfile
