@@ -52,6 +52,16 @@ public class TutorialController {
         }
     }
 
+    @GetMapping("/tutorials/description/{id}")
+    public ResponseEntity<Tutorial> getTutorialById2(@PathVariable("id") long id) {
+        Optional<Tutorial> tutorialData = tutorialRepository.findById(id);
+        if (tutorialData.isPresent()) {
+            return new ResponseEntity<>(tutorialData.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("/tutorials")
     public ResponseEntity<Tutorial> createTutorial(@RequestBody Tutorial tutorial) {
         try {
