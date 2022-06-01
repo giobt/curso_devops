@@ -19,6 +19,7 @@ Move to the root directory of the repository and run the following commands:
 1. Build the app docker image: `docker-compose build`
 2. Pull the supporting docker images: `docker-compose pull`
 3. Bring up the application: `docker-compose up -d`
+To build the container using `docker` instead of `docker-compose` use the following command: `docker build -t dockerbuild/example:latest .`
 
 ## Clean-up the resources
 Move to the root directory of the repository and run the following command:
