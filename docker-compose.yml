@@ -25,6 +25,10 @@ services:
       POSTGRES_PASSWORD: example4132
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
+    volumes:
+      - ./data/postgresql:/var/lib/postgresql/data
+      - ./initdb:/docker-entrypoint-initdb.d
+
 
   adminer:
     image: adminer
@@ -36,7 +40,7 @@ services:
     container_name: jenkins
     user: root
     privileged: true
-    image: jenkins/jenkins:lts
+    image: gabalconi/jenkins_awscli
     ports:
       - "8082:8080"
     volumes:
