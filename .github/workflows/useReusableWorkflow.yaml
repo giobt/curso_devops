@@ -1,0 +1,11 @@
+name: Use reusable workflow
+
+on:
+  workflow_dispatch:
+    
+jobs:
+  trivy_scan:
+    uses: giobt/reusableWorkflows/.github/workflows/buildAndPushDockerImage.yaml@main
+    with:
+      image_name: curso
+      image_tag: devops
